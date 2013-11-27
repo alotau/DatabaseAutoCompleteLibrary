@@ -18,7 +18,7 @@ public class ExampleActivity extends Activity {
 
 	private AutoCompleteTextView mAutoCompleteTextView;
 	private AutoCompleteListener mAutoCompleteListener;
-	private com.littlepancake.android.util.AsyncFetchRemoteFile asyncWgetDate; //
+	private AsyncFetchRemoteFile asyncGetDb;
 
 	private ProgressDialog dialog;
 
@@ -58,11 +58,8 @@ public class ExampleActivity extends Activity {
 			dialog.setCancelable(true);
 
 			/* In the background, go fetch the database.  You'll probably want your own database in a real app. */
-			asyncWgetDate = new AsyncFetchRemoteFile(dialog);
-			asyncWgetDate.execute(
-					dbURL+dbName, 
-					dbDir
-					);
+			asyncGetDb = new AsyncFetchRemoteFile(dialog);
+			asyncGetDb.execute(dbURL+dbName, dbDir);
 
 		}
 
