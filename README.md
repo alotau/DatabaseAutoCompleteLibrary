@@ -3,7 +3,7 @@ DatabaseAutoCompleteLibrary
 
 I've had several apps where I needed a custom AutoCompleteTextView that was backed by a database.  It always seemed like more work than it should have been.  I finally condensed my code and made an Android library project out of it.
 
-There is not too much code to look through if you are interested.  However as a quick overview, here's how you might use it:
+There is not too much code to look through if you are interested.  However as a quick overview, here's how you might use it in the onCreate method of your main activity:
 
 ```java
 String dbName = "my.db";
