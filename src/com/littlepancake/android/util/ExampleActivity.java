@@ -18,7 +18,7 @@ public class ExampleActivity extends Activity {
 
 	private AutoCompleteTextView mAutoCompleteTextView;
 	private AutoCompleteListener mAutoCompleteListener;
-	private com.littlepancake.android.util.AsyncFetchRemoteFile asyncWgetDate;
+	private com.littlepancake.android.util.AsyncFetchRemoteFile asyncWgetDate; //
 
 	private ProgressDialog dialog;
 
