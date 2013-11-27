@@ -5,6 +5,7 @@ I've had several apps where I needed a custom AutoCompleteTextView that was back
 
 There is not too much code to look through if you are interested.  However as a quick overview, here's how you might use it:
 
+```java
 String dbName = "my.db";
 String dbDir  = this.getDatabasePath(dbName).getAbsolutePath();
 /* Grab handle to your AutoCompleteTextView. */
@@ -17,7 +18,7 @@ mAutoCompleteListener.setDbName(dbName);
 mAutoCompleteListener.setLimit(20);
 mAutoCompleteListener.setColName("country");
 mAutoCompleteListener.setTableName("countries");
-
+```
 
 Then, bing bang boom, Bob's your uncle and you're done.
 
