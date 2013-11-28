@@ -29,45 +29,43 @@ public class ExampleActivity extends Activity {
 
 		dbDir = this.getDatabasePath(dbName).getAbsolutePath();
 		Log.d(tag, dbDir);
+		
 		/* Grab handle to your AutoCompleteTextView. */
 		mAutoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autocomplete_example);
 		/* Create a new listener, pass in context, AutoCompleteTextView, and a database name. */
-		mAutoCompleteListener = new AutoCompleteListener(this, mAutoCompleteTextView, "test.db");
+		mAutoCompleteListener = new AutoCompleteListener(this, mAutoCompleteTextView, dbName);
 
 		/* Make some customizations as necessary. */
-		mAutoCompleteListener.setDbName(dbName);
 		mAutoCompleteListener.setLimit(20);
 		mAutoCompleteListener.setColName("country");
 		mAutoCompleteListener.setTableName("countries");
 
 		/* Download a remotely-served database to back our AutoCompleteTextView. */
 		if( !isNetworkAvailable() ) {
+			/* All of these Log warnings would be good in a Toast/Dialog for the user. */
 			Log.w(tag, "No Internet?");
 			Log.w(tag, "Without an Internet connection, you will not be able to download the latest database.");
 			Log.w(tag, "If you haven't ever downloaded a database, then you will not see any AutoComplete action.");
-
 		}
 		else {
 			/* In a real app, you probably don't want to fetch the database EVERY time the app starts up. */
-			Log.d(tag, "Data connection detected.");
+			Log.i(tag, "Data connection detected.");
 
 			/* Create ProgressDialog to keep user notified of what's going on. */
-			dialog = ProgressDialog.show(this, "", 
-					"Fetching database, please wait.", true);
+			dialog = ProgressDialog.show(this, "", "Fetching database, please wait.", true);
 			/* If the user cancels, then the db will not be downloaded. */
 			dialog.setCancelable(true);
 
 			/* In the background, go fetch the database.  You'll probably want your own database in a real app. */
 			asyncGetDb = new AsyncFetchRemoteFile(dialog);
 			asyncGetDb.execute(dbURL+dbName, dbDir);
-
 		}
 
 	}
 
 	private boolean isNetworkAvailable() {
 		ConnectivityManager connectivityManager 
-		= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+			= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}

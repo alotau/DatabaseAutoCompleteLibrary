@@ -16,6 +16,8 @@ public class AutoCompleteListener implements TextWatcher {
 	private Context context = null;
 	private boolean querying, selected;
 	private ArrayAdapter<String> adapter = null;
+	
+	private AsyncAutoCompleteQuery asyncQ;
 
 	private String dbName = null;
 
@@ -37,11 +39,11 @@ public class AutoCompleteListener implements TextWatcher {
 		this.autoCompleteView = autoCompleteView;
 
 		this.autoCompleteView.addTextChangedListener(this);
+		
 	}
 
 	public interface AsyncAutoCompleteInterface {
-		//      public void onGetDBClisk(DialogFragment dialog);
-		//      public void onDontGetDBClick(DialogFragment dialog);
+
 	}
 
 	public void onCompletion(List<String> list) {
@@ -114,8 +116,7 @@ public class AutoCompleteListener implements TextWatcher {
 			querying = true;
 			currentText = autoCompleteView.getText().toString();
 
-			AsyncAutoCompleteQuery asyncQ =
-					new AsyncAutoCompleteQuery(this, context, dbName);
+			asyncQ = new AsyncAutoCompleteQuery(this, context, dbName);
 
 			asyncQ.setLimit(limit);
 			asyncQ.setColName(colName);
@@ -130,9 +131,11 @@ public class AutoCompleteListener implements TextWatcher {
 		return dbName;
 	}
 
-	public void setDbName(String dbName) {
-		this.dbName = dbName;
-	}
+	/* Only allow setting of dbName in constructor because that is the only time it
+	 * should be used. */
+//	public void setDbName(String dbName) {
+//		this.dbName = dbName;
+//	}
 
 	public int getLimit() {
 		return limit;

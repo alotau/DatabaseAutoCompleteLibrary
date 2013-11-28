@@ -11,40 +11,22 @@ import android.util.Log;
 public class AsyncAutoCompleteQuery extends AsyncTask<String, Integer, ArrayList<String>> {
 
 	private final String tag = getClass().getSimpleName();
-	AutoCompleteListener caller;
-	SQLiteDatabase db;
-	DataBaseHelper myDbHelper;
-	String type;
-	String databaseName;
-	Context c;
+	private AutoCompleteListener caller;
+	private SQLiteDatabase db;
+	private static DataBaseHelper myDbHelper = null;
+	private String databaseName;
+	private Context c;
 	
 	private String tableName = "cards";
 	private String colName   = "name";
 	private int limit        = 30;
+	private String limitStr  = "30";
 
 	public AsyncAutoCompleteQuery(AutoCompleteListener caller, Context c, String dbName) {
 		this.caller       = caller;
 		this.db           = null;
 		this.databaseName = dbName;
 		this.c            = c;
-		
-//		if( this.databaseName == null ) {
-//			myDbHelper = null;
-//		}
-//		else {
-//			//Log.d(tag, "Trying to open "+databaseName);
-//			
-//			myDbHelper = new DataBaseHelper(c, databaseName);
-//
-//			boolean result = myDbHelper.openDataBase();
-//
-//			if( result ) {
-//				db = myDbHelper.getReadableDatabase();
-//			}
-//			else {
-//				db = null;
-//			}
-//		}
 	}
 	
 	@Override
@@ -54,11 +36,9 @@ public class AsyncAutoCompleteQuery extends AsyncTask<String, Integer, ArrayList
 			myDbHelper = null;
 		}
 		else {			
-			myDbHelper = new DataBaseHelper(c, databaseName);
+			if( myDbHelper == null ) myDbHelper = new DataBaseHelper(c, databaseName);
 
-			boolean result = myDbHelper.openDataBase();
-
-			if( result ) {
+			if( myDbHelper.openDataBase() ) {
 				db = myDbHelper.getReadableDatabase();
 			}
 			else {
@@ -67,7 +47,7 @@ public class AsyncAutoCompleteQuery extends AsyncTask<String, Integer, ArrayList
 		}
 		
 		if( db == null ) {
-			Log.d(tag, "db is null??");
+			Log.e(tag, "db is null?  No useful work will be done by this task.");
 			return null;
 		}
 		
@@ -84,7 +64,7 @@ public class AsyncAutoCompleteQuery extends AsyncTask<String, Integer, ArrayList
 									null,      /* Group By */
 									null,      /* Having */
 									null,      /* Order By */
-									String.valueOf(limit));     /* Limit */
+									limitStr); /* Limit */
 		ArrayList<String> retList = new ArrayList<String>();
 		int nameIndex = cursor.getColumnIndex(colName);
 		while( cursor.moveToNext() ) {
@@ -128,6 +108,7 @@ public class AsyncAutoCompleteQuery extends AsyncTask<String, Integer, ArrayList
 
 	public void setLimit(int limit) {
 		this.limit = limit;
+		this.limitStr = String.valueOf(this.limit);
 	}
 
 }
