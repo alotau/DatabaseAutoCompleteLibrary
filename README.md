@@ -25,3 +25,8 @@ Of course, this assumes you have the database stored in the right spot and that 
 This is my first public github repo, so please let me know if anything more would be helpful.
 
 I've discussed this a little more in a blog post here:  http://littlepancake.com/2013/11/android-autocompletetextview-with-a-sqlite-database/
+
+How to use
+----------
+
+Just import this repo as an Android project in your Eclipse environment.  Then set up your own Android project to point to it.  For more info:  http://developer.android.com/tools/projects/projects-eclipse.html
